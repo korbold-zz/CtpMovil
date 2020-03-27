@@ -99,6 +99,7 @@ class _LoginPageState extends State<LoginPage> {
           FlutterLogo(size: 150),
           TextFormField(
             autocorrect: false,
+            keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               labelText: 'Usuario:',
               labelStyle: TextStyle(color: Colors.blueAccent, fontSize: 20),
