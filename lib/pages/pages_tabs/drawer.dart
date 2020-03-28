@@ -12,7 +12,6 @@ Widget PDawer(BuildContext context) {
       padding: EdgeInsets.zero,
       children: <Widget>[
         DrawerHeader(
-          
           curve: Curves.fastOutSlowIn,
           child: Text('Drawer Header'),
           decoration: BoxDecoration(
@@ -29,7 +28,7 @@ Widget PDawer(BuildContext context) {
         ListTile(
           title: Text('Cerrar Sesión'),
           onTap: () {
-            Provider.of<UserRepository>(context, listen: false).signOut();
+            signOut(context);
             // Navigator.of(context).popAndPushNamed('/login');
             // ...
           },
@@ -37,4 +36,14 @@ Widget PDawer(BuildContext context) {
       ],
     ),
   );
+}
+
+Future<void> signOut(BuildContext context) async {
+  try {
+    final signOut = Provider.of<UserRepository>(context, listen: false);
+    await signOut.signOut();
+    print('--------------------------EXITO SALIR-----------------');
+  } catch (e) {
+    print('-----------------RESULTADO ERROR-----------------' + e.toString());
+  }
 }

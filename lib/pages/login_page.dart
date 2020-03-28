@@ -29,12 +29,13 @@ class _LoginPageState extends State<LoginPage> {
     _pswd.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffolKey,
       appBar: AppBar(
-       actions: <Widget>[],
+        actions: <Widget>[],
         title: Text(
           'Login CTP',
           style: TextStyle(color: Colors.blue),
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.white,
       ),
       body: Container(
-        child:Padding(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Container(
             child: Padding(
@@ -112,9 +113,16 @@ class _LoginPageState extends State<LoginPage> {
             },
           ),
           user.status == Status.Authenticating
-              ? Center(child: CircularProgressIndicator())
+              ? Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Center(
+                      child: CircularProgressIndicator(
+                    backgroundColor: Colors.blue,
+                  )),
+                )
               : Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 14,horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 14, horizontal: 16.0),
                   child: Material(
                     elevation: 5.0,
                     borderRadius: BorderRadius.circular(30.0),
@@ -124,11 +132,8 @@ class _LoginPageState extends State<LoginPage> {
                         if (_formKey.currentState.validate()) {
                           if (!await user.signIn(_email.text, _pswd.text))
                             _scaffolKey.currentState.showSnackBar(SnackBar(
-                              content: Text("Something is wrong"),
+                              content: Text("Correo y Contraseña no existe."),
                             ));
-                        } else {
-                          Navigator.of(context)
-                              .pushReplacementNamed('/maintabs');
                         }
                       },
                       child: Text(
