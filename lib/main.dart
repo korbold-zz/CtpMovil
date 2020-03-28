@@ -1,40 +1,67 @@
+
+
+import 'package:ctp1/Providers/login_prov.dart';
 import 'package:ctp1/pages/login_page.dart';
 import 'package:ctp1/pages/mainTabs_page.dart';
 import 'package:ctp1/routes/routes.dart';
 import 'package:ctp1/themes/themes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   Widget _rootPage = LoginPage();
-  Future getSession() async => await FirebaseAuth.instance.currentUser() == null
-      ? MainTabsPage()
-      : LoginPage();
-
-  @override
-  void initState() {
-    super.initState();
-    getSession().then((page) {
-      setState(() {
-        _rootPage = page;
-      });
-    });
-  }
+  // Future getSession() async => await FirebaseAuth.instance.currentUser() == null
+  //     ? MainTabsPage()
+  //     : LoginPage();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: tema(),
-      // home: _rootPage,
-      initialRoute: '/',
-      routes: getRutas(),
+    return ChangeNotifierProvider<UserRepository>(
+      create: (_) => UserRepository.instance(),
+      child: MaterialApp(
+        theme: tema(),
+        home: HomePage(),
+        
+        routes: getRutas(),
+      ),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => UserRepository.instance(),
+      child: Consumer(
+        builder: (context, UserRepository user, _) {
+          switch (user.status) {
+            case Status.Uninitialized:
+                return Splash();
+            case Status.Unauthenticated:
+            return LoginPage();
+            case Status.Authenticating:
+              return LoginPage();
+            case Status.Authenticated:
+              return MainTabsPage();
+          }
+        },
+      ),
+    );
+  }
+}
+
+
+class Splash extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Center(
+        child: Image(image: AssetImage('Assets/img.jpg'),height: 600, width: 500,),
+      ),
     );
   }
 }

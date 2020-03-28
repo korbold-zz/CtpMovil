@@ -1,7 +1,9 @@
+import 'package:ctp1/Providers/login_prov.dart';
 import 'package:ctp1/behavior/scrollBeahavior.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -9,99 +11,69 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController _email;
+  TextEditingController _pswd;
   final _formKey = GlobalKey<FormState>();
   final _scaffolKey = GlobalKey<ScaffoldState>();
 
-  String _email, _pswd;
-  bool _isLoginIn = false;
-
-  _login() async {
-    if (_isLoginIn) {
-      return;
-    }
-    setState(() => _isLoginIn = true);
-
-    final form = _formKey.currentState;
-    if (!form.validate()) {
-      _scaffolKey.currentState.hideCurrentSnackBar();
-      setState(() {
-        _isLoginIn = false;
-      });
-      return;
-    }
-    form.save();
-    try {
-      final resp = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: _email, password: _pswd);
-
-      _scaffolKey.currentState.showSnackBar(SnackBar(
-        content: Text('Iniciando Sesión.....'),
-      ));
-
-      print('RESULTADO-------' + resp.toString());
-      Navigator.of(context).pushReplacementNamed('/maintabs');
-    } catch (e) {
-      _scaffolKey.currentState.hideCurrentSnackBar();
-      _scaffolKey.currentState.showSnackBar(SnackBar(
-          content: Text('Usuario y Contraseña no existe.'),
-          duration: Duration(seconds: 10),
-          action: SnackBarAction(
-            label: 'Aceptar',
-            onPressed: () {
-              _scaffolKey.currentState.hideCurrentSnackBar();
-            },
-          )));
-    } finally {
-      setState(() {
-        _isLoginIn = false;
-      });
-    }
+  @override
+  void initState() {
+    super.initState();
+    _email = TextEditingController(text: "");
+    _pswd = TextEditingController(text: "");
   }
 
+  @override
+  void dispose() {
+    _email.dispose();
+    _pswd.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffolKey,
       appBar: AppBar(
+       actions: <Widget>[],
         title: Text(
           'Login CTP',
           style: TextStyle(color: Colors.blue),
         ),
         backgroundColor: Colors.white,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ScrollConfiguration(
-              behavior: HiddenScroll(),
-              child: buildForm(),
+      body: Container(
+        child:Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ScrollConfiguration(
+                behavior: HiddenScroll(),
+                child: buildForm(),
+              ),
             ),
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _login();
-        },
-        child: Icon(Icons.send),
-      ),
-      persistentFooterButtons: <Widget>[],
+      // persistentFooterButtons: <Widget>[],
     );
   }
 
-  Form buildForm() {
+  buildForm() {
+    final user = Provider.of<UserRepository>(context);
     return Form(
       key: _formKey,
       child: ListView(
+        shrinkWrap: true,
         children: <Widget>[
           FlutterLogo(size: 150),
           TextFormField(
+            controller: _email,
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-              labelText: 'Usuario:',
+              prefixIcon: Icon(Icons.email),
+              labelText: 'Correo Electrónico:',
               labelStyle: TextStyle(color: Colors.blueAccent, fontSize: 20),
 
               // border: OutlineInputBorder(
@@ -110,24 +82,21 @@ class _LoginPageState extends State<LoginPage> {
             ),
             validator: (val) {
               if (val.isEmpty) {
-                return 'Por favor Ingrese el Usuario';
+                return 'Por favor Ingrese el Correo';
               } else {
                 return null;
               }
             },
-            onSaved: (val) {
-              setState(() {
-                _email = val;
-              });
-            },
           ),
           SizedBox(
-            height: 30,
+            height: 10,
           ),
           TextFormField(
+            controller: _pswd,
             obscureText: true,
             autocorrect: false,
             decoration: InputDecoration(
+              prefixIcon: Icon(Icons.lock),
               labelStyle: TextStyle(color: Colors.blueAccent, fontSize: 20),
               labelText: 'Contraseña',
               // border: OutlineInputBorder(
@@ -141,12 +110,35 @@ class _LoginPageState extends State<LoginPage> {
                 return null;
               }
             },
-            onSaved: (val) {
-              setState(() {
-                _pswd = val;
-              });
-            },
           ),
+          user.status == Status.Authenticating
+              ? Center(child: CircularProgressIndicator())
+              : Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 14,horizontal: 16.0),
+                  child: Material(
+                    elevation: 5.0,
+                    borderRadius: BorderRadius.circular(30.0),
+                    color: Colors.blue,
+                    child: MaterialButton(
+                      onPressed: () async {
+                        if (_formKey.currentState.validate()) {
+                          if (!await user.signIn(_email.text, _pswd.text))
+                            _scaffolKey.currentState.showSnackBar(SnackBar(
+                              content: Text("Something is wrong"),
+                            ));
+                        } else {
+                          Navigator.of(context)
+                              .pushReplacementNamed('/maintabs');
+                        }
+                      },
+                      child: Text(
+                        "Iniciar Sesión",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
         ],
       ),
     );

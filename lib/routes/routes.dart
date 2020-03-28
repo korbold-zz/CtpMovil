@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 Map<String, WidgetBuilder> getRutas() {
   return <String, WidgetBuilder>{
-    '/': (context) => LoginPage(),
+    '/login': (context) => LoginPage(),
     '/maintabs': (context) => MainTabsPage()
   };
 }
