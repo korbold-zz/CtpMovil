@@ -14,16 +14,16 @@ class MainTabsPage extends StatelessWidget {
           appBar: AppBar(
             bottom: TabBar(
               tabs: [
-                Tab(icon: Icon(Icons.directions_car)),
+                Tab(icon: Icon(Icons.supervisor_account)),
                 Tab(icon: Icon(Icons.directions_transit)),
                 Tab(icon: Icon(Icons.directions_bike)),
               ],
             ),
-            title: Text('Tabs Demo'),
+            title: Text('Clientes'),
           ),
           body: TabBarView(
             children: [
-              Icon(Icons.directions_car),
+              Page1Tab(),
               Icon(Icons.directions_transit),
               Icon(Icons.directions_bike),
             ],

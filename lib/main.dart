@@ -1,5 +1,4 @@
-
-
+import 'package:ctp1/Providers/datos_prov.dart';
 import 'package:ctp1/Providers/login_prov.dart';
 import 'package:ctp1/pages/login_page.dart';
 import 'package:ctp1/pages/mainTabs_page.dart';
@@ -24,7 +23,6 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: tema(),
         home: HomePage(),
-        
         routes: getRutas(),
       ),
     );
@@ -34,15 +32,18 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => UserRepository.instance(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserRepository.instance()),
+        ChangeNotifierProvider(create: (_) => CRUDModel()),
+      ],
       child: Consumer(
         builder: (context, UserRepository user, _) {
           switch (user.status) {
             case Status.Uninitialized:
-                return Splash();
+              return Splash();
             case Status.Unauthenticated:
-            return LoginPage();
+              return LoginPage();
             case Status.Authenticating:
               return LoginPage();
             case Status.Authenticated:
@@ -54,13 +55,16 @@ class HomePage extends StatelessWidget {
   }
 }
 
-
 class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
       child: Center(
-        child: Image(image: AssetImage('Assets/img.jpg'),height: 600, width: 500,),
+        child: Image(
+          image: AssetImage('Assets/img.jpg'),
+          height: 600,
+          width: 500,
+        ),
       ),
     );
   }
