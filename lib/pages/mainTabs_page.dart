@@ -1,4 +1,5 @@
 import 'package:ctp1/pages/pages_tabs/drawer.dart';
+import 'package:ctp1/pages/pages_tabs/lugares_tab.dart';
 import 'package:ctp1/pages/pages_tabs/page_1.dart';
 import 'package:ctp1/pages/pages_tabs/page_2.dart';
 import 'package:ctp1/pages/pages_tabs/page_3.dart';
@@ -14,7 +15,7 @@ class MainTabsPage extends StatelessWidget {
           appBar: AppBar(
             bottom: TabBar(
               tabs: [
-                Tab(icon: Icon(Icons.supervisor_account)),
+                Tab(icon: Icon(Icons.place)),
                 Tab(icon: Icon(Icons.directions_transit)),
                 Tab(icon: Icon(Icons.directions_bike)),
               ],
@@ -23,7 +24,8 @@ class MainTabsPage extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              Page1Tab(),
+              // Page1Tab(),
+              LugaresTab(),
               Icon(Icons.directions_transit),
               Icon(Icons.directions_bike),
             ],

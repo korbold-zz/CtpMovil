@@ -6,12 +6,13 @@ import 'package:flutter/widgets.dart';
 
 
 
-class CRUDModel with ChangeNotifier {
+class ClientesProv with ChangeNotifier {
   // ClientesApi _api = locator<ClientesApi>();
   ClientesApi _api = ClientesApi('clientesCtp1');
 
   List<ClientesModel> clientes;
-
+  String lugar;
+  String _nombreLugar;
 
   Future<List<ClientesModel>> fetchProducts() async {
     var result = await _api.getDataCollection();
@@ -22,9 +23,16 @@ class CRUDModel with ChangeNotifier {
     return clientes;
   }
 
-  Stream<QuerySnapshot> fetchProductsAsStream() {
+  setLugar(String lugar) => this.lugar = lugar;
+  setNombreLugar(String nombrelugar) => this._nombreLugar = nombrelugar;
+  getNombreLugar()=>this._nombreLugar;
+
+  Stream<QuerySnapshot> lugarCodigo() {
+    return _api.streamLugarCodigo(this.lugar);
+  }
+  Stream<QuerySnapshot> getRuta() {
     
-    return _api.streamDataCollection();
+    return _api.streamRuta();
   }
 
   Future<ClientesModel> getProductById(String id) async {

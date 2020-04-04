@@ -1,10 +1,12 @@
 import 'package:ctp1/Providers/datos_prov.dart';
 import 'package:ctp1/Providers/login_prov.dart';
+import 'package:ctp1/Providers/lugares_prov.dart';
+import 'package:ctp1/Providers/usuarios_prov.dart';
+
 import 'package:ctp1/pages/login_page.dart';
 import 'package:ctp1/pages/mainTabs_page.dart';
 import 'package:ctp1/routes/routes.dart';
 import 'package:ctp1/themes/themes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider<UserRepository>(
       create: (_) => UserRepository.instance(),
       child: MaterialApp(
+        initialRoute: '/',
         theme: tema(),
         home: HomePage(),
         routes: getRutas(),
@@ -35,7 +38,9 @@ class HomePage extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserRepository.instance()),
-        ChangeNotifierProvider(create: (_) => CRUDModel()),
+        ChangeNotifierProvider(create: (_) => ClientesProv()),
+        ChangeNotifierProvider(create: (_) => LugaresProv()),
+        ChangeNotifierProvider(create: (_) => UsuariosProv()),
       ],
       child: Consumer(
         builder: (context, UserRepository user, _) {

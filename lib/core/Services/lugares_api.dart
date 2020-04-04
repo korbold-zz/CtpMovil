@@ -1,26 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ClientesApi {
+class LugaresApi {
   final Firestore _db = Firestore.instance;
   final String path;
   CollectionReference ref;
 
-  ClientesApi(this.path) {
+  LugaresApi(this.path) {
     ref = _db.collection(path);
-    print('RESULTADO--------------------'+ref.toString());
+    print('RESULTADO--------------------:  '+ref.snapshots().toString());
   }
   Future<QuerySnapshot> getDataCollection() {
     return ref.getDocuments();
   }
 
-   Stream<QuerySnapshot> streamLugarCodigo(String cod) {
+  Stream<QuerySnapshot> streamLugarCodigo(String cod) {
     return  ref.where('CODRUTA', isEqualTo: cod).snapshots();
   }
 
-  
-
-  Stream<QuerySnapshot> streamRuta() {
-    return  ref.where('CODCOB', isEqualTo: 'C6' ).snapshots();
+  Stream<QuerySnapshot> streamRuta(String cod) {
+    return  ref.where('email', isEqualTo: cod).snapshots();
   }
 
   Future<DocumentSnapshot> getDocumentById(String id) {
