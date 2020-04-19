@@ -7,32 +7,30 @@ class ClientesApi {
 
   ClientesApi(this.path) {
     ref = _db.collection(path);
-    print('RESULTADO--------------------'+ref.toString());
+    print('RESULTADO--------------------' + ref.toString());
   }
   Future<QuerySnapshot> getDataCollection() {
     return ref.getDocuments();
   }
 
-   Stream<QuerySnapshot> streamLugarCodigo(String cod) {
-    return  ref.where('CODRUTA', isEqualTo: cod).snapshots();
+  Stream<QuerySnapshot> streamLugarCodigo(String cod) {
+    return ref.where('CODRUTA', isEqualTo: cod).snapshots();
   }
-
-  
 
   Stream<QuerySnapshot> streamRuta() {
-    return  ref.where('CODCOB', isEqualTo: 'C6' ).snapshots();
+    return ref.where('CODCOB', isEqualTo: 'C6').snapshots();
   }
 
-  Future<DocumentSnapshot> getDocumentById(String id) {
-    return ref.document(id).get();
+  Stream<QuerySnapshot> getPagosDocumentById(String id) {
+    return ref.document(id).collection('PAGOS').snapshots();
   }
 
   Future<void> removeDocument(String id) {
     return ref.document(id).delete();
   }
 
-  Future<DocumentReference> addDocument(Map data) {
-    return ref.add(data);
+  Future<void> addDocument(Map data, String id) {
+    return ref.document(id).collection('PAGOS').document().setData(data);
   }
 
   Future<void> updateDocument(Map data, String id) {

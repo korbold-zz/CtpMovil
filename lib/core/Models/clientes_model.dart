@@ -1,30 +1,44 @@
 class ClientesModel {
+  String id;
   int codigo;
   String nombreCompleto;
   String cobrador;
   String nombreRuta;
   String fechaSig;
+  String celular;
+  String telefono;
+  dynamic saldo;
 
   ClientesModel(
       {this.nombreCompleto,
       this.cobrador,
       this.codigo,
       this.nombreRuta,
-      this.fechaSig});
+      this.fechaSig,
+      this.celular,
+      this.telefono});
 
-  ClientesModel.fromMap(Map snapshot)
-      : nombreCompleto = snapshot['NOMCLI'] ?? '',
-        codigo = snapshot['CODCLI'] ?? '',
+  ClientesModel.fromMap(Map snapshot, String id)
+      :id = id ?? '', 
+       codigo = snapshot['CODCLI'] ?? '',
+       nombreCompleto = snapshot['NOMCLI'] ?? '',
         nombreRuta = snapshot['ZONA'] ?? '',
         cobrador = snapshot['CODCOB'] ?? '',
-        fechaSig =  snapshot['SIGVI'] ?? '';
+        fechaSig =  snapshot['SIGVI'] ?? '',
+        celular =  snapshot['CELCLI'] ?? '',
+        saldo =  snapshot['SALDOC'] ?? 0;
   toJson() {
     return {
+      "CODCLI": codigo,
       "NOMCLI": nombreCompleto,
       "CODCOB": cobrador,
-      "CODCLI": codigo,
       "ZONA": nombreRuta,
-      "ZONA": fechaSig,
+      "SIGVI": fechaSig,
+      "CELCLI": celular,
+      "SALDOC": saldo,
     };
   }
+
+get nombresCompleto => nombreCompleto;
+  
 }

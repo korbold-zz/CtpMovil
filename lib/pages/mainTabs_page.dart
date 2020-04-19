@@ -1,8 +1,6 @@
 import 'package:ctp1/pages/pages_tabs/drawer.dart';
 import 'package:ctp1/pages/pages_tabs/lugares_tab.dart';
-import 'package:ctp1/pages/pages_tabs/page_1.dart';
-import 'package:ctp1/pages/pages_tabs/page_2.dart';
-import 'package:ctp1/pages/pages_tabs/page_3.dart';
+
 import 'package:flutter/material.dart';
 
 class MainTabsPage extends StatelessWidget {
@@ -33,7 +31,6 @@ class MainTabsPage extends StatelessWidget {
           drawer: PDawer(context),
         ),
       ),
-      
     );
   }
 }
