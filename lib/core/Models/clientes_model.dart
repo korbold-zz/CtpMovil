@@ -7,7 +7,7 @@ class ClientesModel {
   String fechaSig;
   String celular;
   String telefono;
-  dynamic saldo;
+  num saldo;
 
   ClientesModel(
       {this.nombreCompleto,
@@ -16,7 +16,9 @@ class ClientesModel {
       this.nombreRuta,
       this.fechaSig,
       this.celular,
-      this.telefono});
+      this.telefono, 
+      this.saldo, 
+      this.id});
 
   ClientesModel.fromMap(Map snapshot, String id)
       :id = id ?? '', 

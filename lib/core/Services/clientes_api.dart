@@ -22,11 +22,11 @@ class ClientesApi {
   }
 
   Stream<QuerySnapshot> getPagosDocumentById(String id) {
-    return ref.document(id).collection('PAGOS').snapshots();
+    return ref.document(id).collection('PAGOS').orderBy('FECHA_PAGO',descending: true).snapshots();
   }
 
-  Future<void> removeDocument(String id) {
-    return ref.document(id).delete();
+  Future<void> removeDocument(String id, String id2) {
+    return ref.document(id).collection('PAGOS').document(id2).delete();
   }
 
   Future<void> addDocument(Map data, String id) {
@@ -34,6 +34,8 @@ class ClientesApi {
   }
 
   Future<void> updateDocument(Map data, String id) {
-    return ref.document(id).updateData(data);
+    return ref.document(id).updateData({
+      'SALDOC':data['SALDOC']
+    });
   }
 }

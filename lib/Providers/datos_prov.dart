@@ -15,9 +15,7 @@ class ClientesProv with ChangeNotifier {
   Future<List<ClientesModel>> fetchProducts() async {
     var result = await _api.getDataCollection();
     clientes = result.documents
-        .map((doc) => ClientesModel.fromMap(
-              doc.data, doc.documentID
-            ))
+        .map((doc) => ClientesModel.fromMap(doc.data, doc.documentID))
         .toList();
 
     return clientes;
@@ -27,10 +25,6 @@ class ClientesProv with ChangeNotifier {
   setNombreLugar(String nombrelugar) => this._nombreLugar = nombrelugar;
   getNombreLugar() => this._nombreLugar;
 
-  
-
-
-
   Stream<QuerySnapshot> lugarCodigo() {
     return _api.streamLugarCodigo(this.lugar);
   }
@@ -39,21 +33,24 @@ class ClientesProv with ChangeNotifier {
     return _api.streamRuta();
   }
 
-  Stream<QuerySnapshot> getPagosById(String id)  {
-    return  _api.getPagosDocumentById(id);
-        
+  Stream<QuerySnapshot> getPagosById(String id) {
+    return _api.getPagosDocumentById(id);
+  }
+
+  Future addPago(PagosModel data, String id) async {
+    var result = await _api.addDocument(data.toJson(), id);
+
+    return;
   }
 
 
-Future addPago(PagosModel data, String id) async{
-    var result  = await _api.addDocument(data.toJson(), id) ;
+  Future updatePago(ClientesModel data, String id) async {
+    await _api.updateDocument(data.toJson(), id);
+    return;
+  }
 
-    return ;
-
-  }  
-
-  Future removeProduct(String id) async {
-    await _api.removeDocument(id);
+  Future removePago(String id, String id2) async {
+    await _api.removeDocument(id, id2);
     notifyListeners();
     return;
   }
@@ -62,6 +59,4 @@ Future addPago(PagosModel data, String id) async{
     await _api.updateDocument(data.toJson(), id);
     return;
   }
-
-  
 }

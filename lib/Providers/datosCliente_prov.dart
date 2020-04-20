@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class DatosClienteProv with ChangeNotifier {
   String nombreCliente;
   String celular;
@@ -13,46 +12,51 @@ class DatosClienteProv with ChangeNotifier {
 
   List<dynamic> _listas;
 
-  List<dynamic> get getLista  => _listas;
-  setLista(){
-
-  }
+  List<dynamic> get getLista => _listas;
+  setLista() {}
 
   String get idCliente => id;
 
-  setIdCliente(String id)=> this.id= id;
+  setIdCliente(String id) => this.id = id;
 
+  String get getNombreCliente {
+    return nombreCliente;
+  }
 
-  String get getNombreCliente { 
-    
-    return nombreCliente;}
-
-   setNombreCliente(String nombreCliente) 
-     { this.nombreCliente = nombreCliente;
-     notifyListeners();
-     }
+  setNombreCliente(String nombreCliente) {
+    this.nombreCliente = nombreCliente;
+    notifyListeners();
+  }
 
   String get getCelular => celular;
 
-   setCelular(String celular) => this.celular = celular;
+  setCelular(String celular) => this.celular = celular;
 
   String get getTelefono => telefono;
 
-   setTelefono(String telefono) => this.telefono = telefono;
+  setTelefono(String telefono) => this.telefono = telefono;
 
   String get getProducto => producto;
 
-   setProducto(String producto) => this.producto = producto;
+  setProducto(String producto) => this.producto = producto;
 
   String get getFechaSig => fechaSig;
 
-   setFechaSig(String fechaSig) => this.fechaSig = fechaSig;
+  setFechaSig(String fechaSig) {
+    this.fechaSig = fechaSig;
+  }
 
-  dynamic get getValor => valor;
+  dynamic get getValor {
+    notifyListeners();
+    return valor;
+  }
 
-   setValor(dynamic valor) => this.valor = valor;
+  setValor(dynamic valor) {
+    notifyListeners();
+    return this.valor = valor;
+  }
 
   String get getDireccion => direccion;
 
-   setDireccion(String direccion) => this.direccion = direccion;
+  setDireccion(String direccion) => this.direccion = direccion;
 }
