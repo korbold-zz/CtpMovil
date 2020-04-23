@@ -40,7 +40,10 @@ class DatosClienteProv with ChangeNotifier {
 
   setProducto(String producto) => this.producto = producto;
 
-  String get getFechaSig => fechaSig;
+  String get getFechaSig {
+    notifyListeners();
+    return fechaSig;
+  }
 
   setFechaSig(String fechaSig) {
     this.fechaSig = fechaSig;

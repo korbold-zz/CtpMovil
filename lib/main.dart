@@ -1,3 +1,4 @@
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ctp1/Providers/datosCliente_prov.dart';
 import 'package:ctp1/Providers/datos_prov.dart';
 import 'package:ctp1/Providers/login_prov.dart';
@@ -24,6 +25,20 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider<UserRepository>(
       create: (_) => UserRepository.instance(),
       child: MaterialApp(
+        localizationsDelegates: [
+   // ... app-specific localization delegate[s] here
+   GlobalMaterialLocalizations.delegate,
+   GlobalWidgetsLocalizations.delegate,
+   GlobalCupertinoLocalizations.delegate,
+ ],
+ supportedLocales: [
+    const Locale('en'), // English
+    const Locale('es'), // Hebrew
+    const Locale.fromSubtags(languageCode: 'es'), // Chinese *See Advanced Locales below*
+    // ... other locales the app supports
+  ],
+
+
         initialRoute: '/',
         theme: tema(),
         home: HomePage(),
