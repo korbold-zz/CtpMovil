@@ -1,3 +1,4 @@
+import 'package:ctp1/core/Models/clientes_model.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ctp1/Providers/datosCliente_prov.dart';
 import 'package:ctp1/Providers/datos_prov.dart';
@@ -58,6 +59,7 @@ class HomePage extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LugaresProv()),
         ChangeNotifierProvider(create: (_) => UsuariosProv()),
         ChangeNotifierProvider(create: (_) => DatosClienteProv()),
+        
       ],
       child: Consumer(
         builder: (context, UserRepository user, _) {

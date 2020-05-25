@@ -49,6 +49,10 @@ class ClientesProv with ChangeNotifier {
     return;
   }
 
+Future updateFecha(ClientesModel data, String id) async {
+    await _api.updateFecha(data.toJson(), id);
+    return;
+  }
   Future removePago(String id, String id2) async {
     await _api.removeDocument(id, id2);
     notifyListeners();
@@ -59,4 +63,10 @@ class ClientesProv with ChangeNotifier {
     await _api.updateDocument(data.toJson(), id);
     return;
   }
+
+  Future updateDatosCliente(ClientesModel data, String id) async {
+    await _api.updateDatosCliente(data.toJson(), id);
+    return;
+  }
+  
 }

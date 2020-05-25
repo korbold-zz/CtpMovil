@@ -75,9 +75,12 @@ class Page1Tab extends StatelessWidget {
                 onPressed: () {
                   datosCliente.setNombreCliente(clientesDetails.nombreCompleto);
                   datosCliente.setCelular(clientesDetails.celular);
+                  datosCliente.setTelefono(clientesDetails.telefono);
                   datosCliente.setValor(clientesDetails.saldo);
                   datosCliente.setIdCliente(clientesDetails.id);
                   datosCliente.setFechaSig(clientesDetails.fechaSig);
+                  datosCliente.setCodCliente(clientesDetails.codigo);
+                  // datosCliente.setDireccion(clientesDetails.);
 
                   Navigator.push(
                     context,

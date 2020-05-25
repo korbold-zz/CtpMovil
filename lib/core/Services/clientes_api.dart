@@ -38,4 +38,18 @@ class ClientesApi {
       'SALDOC':data['SALDOC']
     });
   }
+
+  Future<void> updateDatosCliente(Map data, String id) {
+    return ref.document(id).updateData({
+      'NOMCLI':data['NOMCLI'],
+      'CELCLI':data['CELCLI'],
+      'TELCLI':data['TELCLI'],
+    });
+  }
+
+  Future<void> updateFecha(Map data, String id) {
+    return ref.document(id).updateData({
+      'SIGVI':data['SIGVI']
+    });
+  }
 }

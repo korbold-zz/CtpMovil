@@ -9,8 +9,12 @@ class DatosClienteProv with ChangeNotifier {
   dynamic valor;
   String direccion;
   String id;
-
+  int codigoCliente;
   List<dynamic> _listas;
+
+  int get codCliente => codigoCliente;
+
+  setCodCliente(int codigo) => this.codigoCliente = codigo;
 
   List<dynamic> get getLista => _listas;
   setLista() {}
@@ -30,22 +34,28 @@ class DatosClienteProv with ChangeNotifier {
 
   String get getCelular => celular;
 
-  setCelular(String celular) => this.celular = celular;
+  setCelular(String celular) {
+    this.celular = celular;
+    notifyListeners();
+  }
 
   String get getTelefono => telefono;
 
-  setTelefono(String telefono) => this.telefono = telefono;
+  setTelefono(String telefono) {
+    this.telefono = telefono;
+    notifyListeners();
+  }
 
   String get getProducto => producto;
 
   setProducto(String producto) => this.producto = producto;
 
   String get getFechaSig {
-    notifyListeners();
     return fechaSig;
   }
 
   setFechaSig(String fechaSig) {
+    notifyListeners();
     this.fechaSig = fechaSig;
   }
 

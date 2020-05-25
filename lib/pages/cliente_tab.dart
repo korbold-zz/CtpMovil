@@ -1,13 +1,16 @@
+import 'package:ctp1/Providers/datosCliente_prov.dart';
 import 'package:ctp1/pages/cliente_page.dart';
 import 'package:ctp1/pages/pages_tabs/drawer.dart';
 import 'package:ctp1/pages/pages_tabs/pay_tab.dart';
 import 'package:ctp1/pages/prueba.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ClienteTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final datosCliente = Provider.of<DatosClienteProv>(context, listen: false);
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -18,11 +21,12 @@ class ClienteTab extends StatelessWidget {
               Tab(icon: Icon(Icons.account_balance_wallet)),
             ],
           ),
-          title: Text('Clientes'),
+          title: Text('Cliente: ${datosCliente.codigoCliente}'),
         ),
         body: TabBarView(
           children: [
-            ClientePage(),
+            // ClientePage(),
+            ProfilePage(),
             PayTab(),
           ],
         ),

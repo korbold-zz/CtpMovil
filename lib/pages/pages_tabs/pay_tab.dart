@@ -55,11 +55,13 @@ class _PayTabState extends State<PayTab> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),
                   elevation: 20,
-                  
                   color: Colors.blue,
                   child: FlatButton(
-                    
-                    onPressed: () {},
+                    onPressed: () {
+                      clienteProv.updateFecha(
+                          ClientesModel(fechaSig: edit2.text.toString()),
+                          datosCliente.id);
+                    },
                     child: Icon(Icons.check),
                   ),
                 ),
@@ -104,6 +106,7 @@ class _PayTabState extends State<PayTab> {
                       fecha: Timestamp.now(),
                       saldo: (datosCliente.valor - num.parse(edit.value.text))),
                   datosCliente.id);
+
               clienteProv.updatePago(
                   ClientesModel(
                       saldo:

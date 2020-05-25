@@ -1,5 +1,6 @@
 import 'package:ctp1/Providers/datosCliente_prov.dart';
 import 'package:ctp1/core/Models/clientes_model.dart';
+import 'package:ctp1/pages/prueba.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
@@ -10,10 +11,8 @@ class ClientePage extends StatefulWidget {
 }
 
 class _ClientePageState extends State<ClientePage> {
-  
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Container(
         child: _usuario(),
@@ -22,138 +21,161 @@ class _ClientePageState extends State<ClientePage> {
   }
 
   _usuario() {
-        final datosCliente = Provider.of<DatosClienteProv>(context, listen: false);
+    final datosCliente = Provider.of<DatosClienteProv>(context, listen: false);
     return Consumer<DatosClienteProv>(
-      builder: (context, DatosClienteProv value,__) {
-          return Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Form(
-          child: ListView(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  _textoDatos(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      _buton(celular: datosCliente.celular),
-                      SizedBox(
-                        width: 40,
-                      ),
-                      _buton(),
-                    ],
-                  ),
-                   _textoDatos2(),
-                  SizedBox(
-                        height: 15,
-                      ),
-                   _textoDatos1(),
-                ],
-              )
-            ],
+      builder: (context, DatosClienteProv value, __) {
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Form(
+            child: ListView(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    _textoDatos(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        _buton(celular: datosCliente.celular),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        _buton(),
+                      ],
+                    ),
+                    _textoDatos2(),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    _textoDatos1(),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                      builder: (context) => new ProfilePage(),
+                    ),
+                  );
+                      },
+                      color: Colors.blue,
+                      child: Text('Editar', style: TextStyle(color: Colors.white),),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
-        ),
-      ); 
+        );
       },
     );
   }
 
   Container _textoDatos() {
-        final datosCliente = Provider.of<DatosClienteProv>(context, listen: false);
+    final datosCliente = Provider.of<DatosClienteProv>(context, listen: false);
     return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color.fromARGB(255, 197, 66, 65),
-                  boxShadow: [
-                    new BoxShadow(
-                      color: Colors.black26,
-                      offset: new Offset(1, 45),
-                    ),
-                  ],
-                ),
-                height: 80,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        datosCliente.getNombreCliente,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            color: Colors.white,
-                            fontSize: 18),
-                      ),
-                    ],
-                  ),
-                ),
-              );
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Color.fromARGB(255, 197, 66, 65),
+        boxShadow: [
+          new BoxShadow(
+            color: Colors.black26,
+            offset: new Offset(1, 45),
+          ),
+        ],
+      ),
+      height: 80,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              datosCliente.getNombreCliente,
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  color: Colors.white,
+                  fontSize: 18),
+            ),
+          ],
+        ),
+      ),
+    );
   }
+
   Container _textoDatos2() {
+    final datosCliente = Provider.of<DatosClienteProv>(context, listen: false);
     return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color.fromARGB(255, 69, 74, 114),
-                  boxShadow: [
-                    new BoxShadow(
-                      color: Colors.black26,
-                      offset: new Offset(1, 45),
-                    ),
-                  ],
-                ),
-                height:40,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Siguiente Visita: 20/03/2020',
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            color: Colors.white,
-                            fontSize: 18),
-                      ),
-                    ],
-                  ),
-                ),
-              );
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Color.fromARGB(255, 69, 74, 114),
+        boxShadow: [
+          new BoxShadow(
+            color: Colors.black26,
+            offset: new Offset(1, 45),
+          ),
+        ],
+      ),
+      height: 40,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Siguiente Visita: ${datosCliente.getFechaSig}',
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  color: Colors.white,
+                  fontSize: 18),
+            ),
+          ],
+        ),
+      ),
+    );
   }
-   Container _textoDatos1() {
+
+  Container _textoDatos1() {
     return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color.fromARGB(255, 197, 66, 65),
-                  boxShadow: [
-                    new BoxShadow(
-                      color: Colors.black26,
-                      offset: new Offset(1, 10),
-                    ),
-                  ],
-                ),
-                height: 150,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text('Dirección:', style: TextStyle(fontSize: 20, ),),
-                      Text(
-                        'Enim exercitation anim labore cillum Lorem adipisicing aliquip pariatur ut occaecat magna dolore cillum.',
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 15),
-                      ),
-                    ],
-                  ),
-                ),
-              );
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Color.fromARGB(255, 197, 66, 65),
+        boxShadow: [
+          new BoxShadow(
+            color: Colors.black26,
+            offset: new Offset(1, 10),
+          ),
+        ],
+      ),
+      height: 150,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'Dirección:',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+            Text(
+              'Enim exercitation anim labore cillum Lorem adipisicing aliquip pariatur ut occaecat magna dolore cillum.',
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 15),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   _buton({String celular}) {
