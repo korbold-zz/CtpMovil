@@ -27,19 +27,18 @@ class MyApp extends StatelessWidget {
       create: (_) => UserRepository.instance(),
       child: MaterialApp(
         localizationsDelegates: [
-   // ... app-specific localization delegate[s] here
-   GlobalMaterialLocalizations.delegate,
-   GlobalWidgetsLocalizations.delegate,
-   GlobalCupertinoLocalizations.delegate,
- ],
- supportedLocales: [
-    const Locale('en'), // English
-    const Locale('es'), // Hebrew
-    const Locale.fromSubtags(languageCode: 'es'), // Chinese *See Advanced Locales below*
-    // ... other locales the app supports
-  ],
-
-
+          // ... app-specific localization delegate[s] here
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en'), // English
+          const Locale('es'), // Hebrew
+          const Locale.fromSubtags(
+              languageCode: 'es'), // Chinese *See Advanced Locales below*
+          // ... other locales the app supports
+        ],
         initialRoute: '/',
         theme: tema(),
         home: HomePage(),
@@ -59,10 +58,10 @@ class HomePage extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LugaresProv()),
         ChangeNotifierProvider(create: (_) => UsuariosProv()),
         ChangeNotifierProvider(create: (_) => DatosClienteProv()),
-        
       ],
       child: Consumer(
-        builder: (context, UserRepository user, _) {
+        builder: (context, UserRepository user,
+         _) {
           switch (user.status) {
             case Status.Uninitialized:
               return Splash();
